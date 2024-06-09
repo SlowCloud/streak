@@ -6,7 +6,6 @@ import java.util.Date;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Component;
 
 import com.nimbusds.jose.JOSEException;
@@ -19,10 +18,9 @@ import com.nimbusds.jose.crypto.MACSigner;
 import com.nimbusds.jose.crypto.MACVerifier;
 import com.nimbusds.jwt.JWTClaimsSet;
 import com.nimbusds.jwt.SignedJWT;
+import com.slowcloud.streak.member.model.dao.MemberRepository;
 import com.slowcloud.streak.member.model.dto.Member;
 import com.slowcloud.streak.member.model.service.MemberService;
-
-import lombok.RequiredArgsConstructor;
 
 @Component
 public class JwtUtil {
@@ -34,11 +32,11 @@ public class JwtUtil {
 	private JWSSigner signer;
 	private JWSVerifier verifier;
 
-	private final MemberService memberService;
+	private final MemberRepository memberRepository;
 
-	public JwtUtil(@Value("${jwt.key}") String salt, MemberService memberService) throws JOSEException {
+	public JwtUtil(@Value("${jwt.key}") String salt, MemberRepository memberRepository) throws JOSEException {
 		super();
-		this.memberService = memberService;
+		this.memberRepository = memberRepository;
 		signer = new MACSigner(salt);
 		verifier = new MACVerifier(salt);
 	}
@@ -59,11 +57,9 @@ public class JwtUtil {
 
 		String userId = jwtClaimsSet.getStringClaim(USERNAME);
 
-		Member member = memberService.getMember(userId);
-		
-//		SimpleGrantedAuthority
+		Member member = memberRepository.findById(userId);
 
-		return new UsernamePasswordAuthenticationToken(member, null);
+		return new UsernamePasswordAuthenticationToken(member, null, member.getAuthorities());
 	}
 
 	/**

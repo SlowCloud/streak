@@ -1,16 +1,8 @@
 package com.slowcloud.streak.member.controller;
 
-import java.net.http.HttpHeaders;
-import java.net.http.HttpResponse;
-
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -35,11 +27,11 @@ public class MemberController {
 	private final MemberService memberService;
 	private final JwtUtil jwtUtil;
 
-	@GetMapping("/signin")
-	public void getMember(String id, HttpServletResponse response) throws JOSEException {
-		Member member = memberService.getMember(id);
-		String token = jwtUtil.buildToken(member);
+	@PostMapping("/signin")
+	public void getMember(@RequestBody Member member, HttpServletResponse response) throws JOSEException {
+		member = memberService.signin(member);
 
+		String token = jwtUtil.buildToken(member);
 		Cookie cookie = new Cookie("jwt", token);
 		response.addCookie(cookie);
 	}
