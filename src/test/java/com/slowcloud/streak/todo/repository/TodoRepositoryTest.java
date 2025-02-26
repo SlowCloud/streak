@@ -1,7 +1,6 @@
-package com.slowcloud.streak.repository;
+package com.slowcloud.streak.todo.repository;
 
 import com.slowcloud.streak.todo.entity.Todo;
-import com.slowcloud.streak.todo.repository.TodoRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

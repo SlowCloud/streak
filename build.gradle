@@ -18,23 +18,30 @@ repositories {
 }
 
 dependencies {
+//	spring boot dependencies
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	runtimeOnly 'com.mysql:mysql-connector-j'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 
+//	h2 dependency
 	testRuntimeOnly 'com.h2database:h2'
 
+//	lombok dependencies
 	compileOnly 'org.projectlombok:lombok:1.18.36'
 	annotationProcessor 'org.projectlombok:lombok:1.18.36'
-
 	testCompileOnly 'org.projectlombok:lombok:1.18.36'
 	testAnnotationProcessor 'org.projectlombok:lombok:1.18.36'
 
+//	mapstruct dependencies
 	implementation 'org.mapstruct:mapstruct:1.6.3'
 	annotationProcessor 'org.mapstruct:mapstruct-processor:1.6.3'
 	implementation 'org.projectlombok:lombok-mapstruct-binding:0.2.0'
+
+//	langChain4j dependencies
+	implementation 'dev.langchain4j:langchain4j-google-ai-gemini-spring-boot-starter:1.0.0-beta1'
+	implementation 'dev.langchain4j:langchain4j-spring-boot-starter:1.0.0-beta1'
 }
 
 tasks.named('test') {

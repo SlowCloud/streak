@@ -1,13 +1,11 @@
 package com.slowcloud.streak.todo.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
 @Getter
-@Setter
+@ToString
 @AllArgsConstructor
 public final class TodoDto {
     private final long id;
